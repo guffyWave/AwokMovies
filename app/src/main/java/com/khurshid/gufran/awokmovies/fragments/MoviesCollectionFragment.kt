@@ -1,11 +1,9 @@
 package com.khurshid.gufran.awokmovies.fragments
 
-import android.R.attr.data
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Toast
 import com.khurshid.gufran.awokmovies.R
@@ -28,6 +26,7 @@ class MoviesCollectionFragment() : BaseFragment(), MoviesHomeView {
     private lateinit var mAdapter: MoviesCollectionAdapter
     private lateinit var mMovieList: MutableList<Any>
     private var mNextPageCount = 1
+    private val numberOfColumns = 2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,10 +44,8 @@ class MoviesCollectionFragment() : BaseFragment(), MoviesHomeView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        val numberOfColumns = 2
         moviesRecyclerView.setLayoutManager(GridLayoutManager(activity, numberOfColumns))
-
+        moviesRecyclerView.setHasFixedSize(true)
 
         mAdapter = MoviesCollectionAdapter(mMovieList, MoviesCollectionAdapter.OnItemClickListener { specie, position ->
 
@@ -72,7 +69,9 @@ class MoviesCollectionFragment() : BaseFragment(), MoviesHomeView {
             moviesRecyclerView.visibility = View.GONE
         } else {
             mMovieList.add(LoadingProxyEntity())
-            mAdapter.notifyItemInserted(mMovieList.size - 1)
+            activity!!.window.decorView.handler.post(Runnable {
+                mAdapter.notifyItemInserted(mMovieList.size - 1)
+            })
             progressBar.visibility = View.GONE
             moviesRecyclerView.visibility = View.VISIBLE
         }
@@ -92,17 +91,18 @@ class MoviesCollectionFragment() : BaseFragment(), MoviesHomeView {
 
         removeLoadAtBottom()
 
-        var popularityResult:PopularityResult= queryResult as PopularityResult
+        var popularityResult: PopularityResult = queryResult as PopularityResult
 
-       // popularityResult.
+        // popularityResult.
         if (popularityResult.movies != null && popularityResult.movies.size > 0) {
-            synchronized(mMovieList) { mMovieList.addAll(popularityResult.movies ) }
+            synchronized(mMovieList) { mMovieList.addAll(popularityResult.movies) }
         } else {
             Toast.makeText(activity, getString(R.string.message_no_more_data), Toast.LENGTH_SHORT).show()
         }
 
         mAdapter.notifyDataSetChangedManually()
     }
+
     private fun removeLoadAtBottom() {
         synchronized(mMovieList) {
             if (mMovieList.size != 0 && (mMovieList.get(mMovieList.size - 1) is LoadingProxyEntity)) {
