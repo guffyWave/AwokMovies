@@ -9,7 +9,7 @@ import android.content.Context;
 
 public class AwokMovies extends Application {
     private static AwokMovies awokMovies;
-    public static String TAG = "SPECIES APP";
+    public static String TAG = "AWOK_MOVIES";
 
     @Override
     public void onCreate() {
