@@ -9,7 +9,6 @@ import android.widget.Toast
 import com.khurshid.gufran.awokmovies.R
 import com.khurshid.gufran.awokmovies.adapters.LoadingProxyEntity
 import com.khurshid.gufran.awokmovies.adapters.MoviesCollectionAdapter
-import com.khurshid.gufran.awokmovies.communication.retrofit.response.PopularityResult
 import com.khurshid.gufran.awokmovies.communication.retrofit.response.QueryResult
 import com.khurshid.gufran.awokmovies.dao.MoviesDaoImpl
 import com.khurshid.gufran.awokmovies.presenter.MoviesPresenter
@@ -25,8 +24,14 @@ class MoviesCollectionFragment() : BaseFragment(), MoviesHomeView {
     private lateinit var mPresenter: MoviesPresenter
     private lateinit var mAdapter: MoviesCollectionAdapter
     private lateinit var mMovieList: MutableList<Any>
-    private var mNextPageCount = 1
+    private var mCurrentPageCount = 1
     private val numberOfColumns = 2
+    var mScreenState: State = State.POPULAR
+    private var mQuery: String = ""
+
+    enum class State {
+        POPULAR, SEARCH, TOP_RATED
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,19 +53,63 @@ class MoviesCollectionFragment() : BaseFragment(), MoviesHomeView {
         moviesRecyclerView.setHasFixedSize(true)
 
         mAdapter = MoviesCollectionAdapter(mMovieList, MoviesCollectionAdapter.OnItemClickListener { specie, position ->
-
             mAdapter.notifyItemChanged(position)
         })
 
         moviesRecyclerView.adapter = mAdapter
 
         mPresenter = MoviesPresenter(MoviesDaoImpl(), this)
-        mPresenter.showPopularMovies(mNextPageCount)
+        showPopularMovies()
 
         mAdapter.setOnLoadMoreListener {
-            mPresenter.showPopularMovies(++mNextPageCount)
+            mCurrentPageCount++
+            when (mScreenState) {
+                State.POPULAR -> mPresenter.showPopularMovies(mCurrentPageCount)
+                State.SEARCH -> mPresenter.searchMovies(mQuery, mCurrentPageCount)
+                State.POPULAR -> mPresenter.showTopMovies(mCurrentPageCount)
+            }
         }
+    }
 
+    public fun showPopularMovies() {
+        mScreenState = State.POPULAR
+        mCurrentPageCount = 1
+        mMovieList.clear()
+        mPresenter.showPopularMovies(mCurrentPageCount)
+    }
+
+    public fun searchMovie(query: String) {
+        mScreenState = State.SEARCH
+        mCurrentPageCount = 1
+        mMovieList.clear()
+        mQuery = query
+        mPresenter.searchMovies(query, mCurrentPageCount)
+    }
+
+    public fun showTopRatedMovies() {
+        mScreenState = State.TOP_RATED
+        mCurrentPageCount = 1
+        mMovieList.clear()
+        mPresenter.showTopMovies(mCurrentPageCount)
+    }
+
+    override fun enListMovie(queryResult: QueryResult?) {
+        removeLoadingCard()
+        if (queryResult!!.movies != null && queryResult!!.movies.size > 0) {
+            synchronized(mMovieList) { mMovieList.addAll(queryResult.movies) }
+        } else {
+            Toast.makeText(activity, getString(R.string.message_no_more_data), Toast.LENGTH_SHORT).show()
+        }
+        mAdapter.notifyDataSetChangedManually()
+    }
+
+    private fun removeLoadingCard() {
+        synchronized(mMovieList) {
+            if (mMovieList.size != 0 && (mMovieList.get(mMovieList.size - 1) is LoadingProxyEntity)) {
+                mMovieList.removeAt(mMovieList.size - 1)
+                mAdapter.notifyDataSetChangedManually()
+            }
+        }
     }
 
     override fun showWait() {
@@ -84,32 +133,7 @@ class MoviesCollectionFragment() : BaseFragment(), MoviesHomeView {
 
     override fun onFailure(failureMessage: String?) {
         Toast.makeText(activity, getString(R.string.message_data_failed), Toast.LENGTH_SHORT).show()
-        removeLoadAtBottom()
-    }
-
-    override fun enListMovie(queryResult: QueryResult?) {
-
-        removeLoadAtBottom()
-
-        var popularityResult: PopularityResult = queryResult as PopularityResult
-
-        // popularityResult.
-        if (popularityResult.movies != null && popularityResult.movies.size > 0) {
-            synchronized(mMovieList) { mMovieList.addAll(popularityResult.movies) }
-        } else {
-            Toast.makeText(activity, getString(R.string.message_no_more_data), Toast.LENGTH_SHORT).show()
-        }
-
-        mAdapter.notifyDataSetChangedManually()
-    }
-
-    private fun removeLoadAtBottom() {
-        synchronized(mMovieList) {
-            if (mMovieList.size != 0 && (mMovieList.get(mMovieList.size - 1) is LoadingProxyEntity)) {
-                mMovieList.removeAt(mMovieList.size - 1)
-                mAdapter.notifyDataSetChangedManually()
-            }
-        }
+        removeLoadingCard()
     }
 
     override fun onDestroy() {

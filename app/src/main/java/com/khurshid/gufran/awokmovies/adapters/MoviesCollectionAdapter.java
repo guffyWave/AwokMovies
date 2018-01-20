@@ -55,6 +55,9 @@ public class MoviesCollectionAdapter extends RecyclerView.Adapter {
             Movie movie = (Movie) mMovieList.get(position);
             movieViewHolder.setClick(movie, position, mListener);
             movieViewHolder.movieNameTV.setText(movie.getTitle());
+            movieViewHolder.movieYearTV.setText(movie.getReleaseDate().split("-")[0]);
+            movieViewHolder.movieRatingTV.setText(movie.getVoteAverage() + "");
+            movieViewHolder.descriptionTV.setText(movie.getOverview());
             Glide.with(movieViewHolder.moviePosterIV.getContext())
                     .load("http://image.tmdb.org/t/p/w185//" + movie.getPosterPath())
                     //.placeholder(R.drawable.loading_spinner)
@@ -86,7 +89,7 @@ public class MoviesCollectionAdapter extends RecyclerView.Adapter {
     }
 
     public class MovieCardViewHolder extends RecyclerView.ViewHolder {
-        TextView movieNameTV;
+        TextView movieNameTV, descriptionTV, movieRatingTV, movieYearTV;
         ImageView moviePosterIV;
         CardView movieCardView;
 
@@ -95,6 +98,9 @@ public class MoviesCollectionAdapter extends RecyclerView.Adapter {
             movieCardView = itemView.findViewById(R.id.movieCardView);
             moviePosterIV = itemView.findViewById(R.id.moviePosterIV);
             movieNameTV = itemView.findViewById(R.id.movieNameTV);
+            descriptionTV = itemView.findViewById(R.id.descriptionTV);
+            movieRatingTV = itemView.findViewById(R.id.movieRatingTV);
+            movieYearTV = itemView.findViewById(R.id.movieYearTV);
         }
 
 
