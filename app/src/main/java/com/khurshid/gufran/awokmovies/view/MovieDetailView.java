@@ -13,5 +13,5 @@ public interface MovieDetailView {
 
     void onFailure(String failureMessage);
 
-    void populateMovie(MovieDetail movieDetail);
+    void populateMovieDetail(MovieDetail movieDetail);
 }

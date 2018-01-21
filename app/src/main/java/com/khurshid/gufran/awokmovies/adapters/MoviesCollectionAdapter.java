@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.khurshid.gufran.awokmovies.R;
 import com.khurshid.gufran.awokmovies.entity.Movie;
 
@@ -60,6 +61,7 @@ public class MoviesCollectionAdapter extends RecyclerView.Adapter {
             movieViewHolder.descriptionTV.setText(movie.getOverview());
             Glide.with(movieViewHolder.moviePosterIV.getContext())
                     .load("http://image.tmdb.org/t/p/w185//" + movie.getPosterPath())
+                    .transition(DrawableTransitionOptions.withCrossFade())
                     //.placeholder(R.drawable.loading_spinner)
                     .into(movieViewHolder.moviePosterIV);
         }

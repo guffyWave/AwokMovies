@@ -7,4 +7,6 @@
     <!--Messages-->
     <string name="message_no_more_data">No more data to show !</string>
     <string name="message_data_failed">Failed to load data !</string>
+    <string name="title_activity_movie_detail"></string>
+
 </resources>

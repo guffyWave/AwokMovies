@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.khurshid.gufran.awokmovies.R
+import com.khurshid.gufran.awokmovies.activities.MovieDetailActivity
 import com.khurshid.gufran.awokmovies.adapters.LoadingProxyEntity
 import com.khurshid.gufran.awokmovies.adapters.MoviesCollectionAdapter
 import com.khurshid.gufran.awokmovies.communication.retrofit.response.QueryResult
@@ -49,11 +50,14 @@ class MoviesCollectionFragment() : BaseFragment(), MoviesHomeView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        moviesRecyclerView.setLayoutManager(GridLayoutManager(activity, numberOfColumns))
+        moviesRecyclerView.layoutManager = (GridLayoutManager(activity, numberOfColumns))
         moviesRecyclerView.setHasFixedSize(true)
 
-        mAdapter = MoviesCollectionAdapter(mMovieList, MoviesCollectionAdapter.OnItemClickListener { specie, position ->
-            mAdapter.notifyItemChanged(position)
+        mAdapter = MoviesCollectionAdapter(mMovieList, MoviesCollectionAdapter.OnItemClickListener { movie, position ->
+            val bundle = Bundle();
+            bundle.putParcelable("MOVIE", movie)
+            MovieDetailActivity.startActivity(activity, bundle)
+            // mAdapter.notifyItemChanged(position)
         })
 
         moviesRecyclerView.adapter = mAdapter

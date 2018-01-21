@@ -32,7 +32,7 @@ public class MovieDetailPresenter {
             @Override
             public void onSuccess(MovieDetail movieDetail) {
                 mMoviesDetailView.removeWait();
-                mMoviesDetailView.populateMovie(movieDetail);
+                mMoviesDetailView.populateMovieDetail(movieDetail);
             }
 
             @Override

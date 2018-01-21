@@ -17,7 +17,6 @@ public class AwokMovies extends Application {
         awokMovies = AwokMovies.this;
     }
 
-
     public static Context getAppContext() {
         return awokMovies.getApplicationContext();
     }
