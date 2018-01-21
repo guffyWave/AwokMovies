@@ -12,9 +12,18 @@ import com.khurshid.gufran.awokmovies.adapters.LoadingProxyEntity
 import com.khurshid.gufran.awokmovies.adapters.MoviesCollectionAdapter
 import com.khurshid.gufran.awokmovies.communication.retrofit.response.QueryResult
 import com.khurshid.gufran.awokmovies.dao.MoviesDaoImpl
+import com.khurshid.gufran.awokmovies.entity.Movie
+import com.khurshid.gufran.awokmovies.management.module.AppModule
+import com.khurshid.gufran.awokmovies.management.module.RoomModule
+import com.khurshid.gufran.awokmovies.persistence.MovieRepository
+import com.khurshid.gufran.awokmovies.persistence.MovieRepositoryDao
 import com.khurshid.gufran.awokmovies.presenter.MoviesPresenter
+import com.khurshid.gufran.awokmovies.util.DatabaseUtil
+import com.khurshid.gufran.awokmovies.util.Utility
 import com.khurshid.gufran.awokmovies.view.MoviesHomeView
 import kotlinx.android.synthetic.main.fragment_movies_collection.*
+import rx.Observer
+import javax.inject.Inject
 
 
 /**
@@ -25,6 +34,7 @@ class MoviesCollectionFragment() : BaseFragment(), MoviesHomeView {
     private lateinit var mPresenter: MoviesPresenter
     private lateinit var mAdapter: MoviesCollectionAdapter
     private lateinit var mMovieList: MutableList<Any>
+    private lateinit var databaseUtil: DatabaseUtil
     private var mCurrentPageCount = 1
     private val numberOfColumns = 2
     var mScreenState: State = State.POPULAR
@@ -34,10 +44,12 @@ class MoviesCollectionFragment() : BaseFragment(), MoviesHomeView {
         POPULAR, SEARCH, TOP_RATED
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mMovieList = mutableListOf()
         retainInstance = true // this will make sure fragment will not get recreated on device configuration changes e.g. screen rotation , etc
+        databaseUtil = DatabaseUtil(activity)
     }
 
 
@@ -59,6 +71,9 @@ class MoviesCollectionFragment() : BaseFragment(), MoviesHomeView {
             MovieDetailActivity.startActivity(activity, bundle)
             // mAdapter.notifyItemChanged(position)
         })
+
+
+        Toast.makeText(activity, "Is Internet " + Utility.isNetworkConnected(activity), Toast.LENGTH_SHORT).show()
 
         moviesRecyclerView.adapter = mAdapter
 
@@ -101,6 +116,8 @@ class MoviesCollectionFragment() : BaseFragment(), MoviesHomeView {
         removeLoadingCard()
         if (queryResult!!.movies != null && queryResult!!.movies.size > 0) {
             synchronized(mMovieList) { mMovieList.addAll(queryResult.movies) }
+
+            //movieRepository!!.insert(mMovieList.get(0) as Movie)
         } else {
             Toast.makeText(activity, getString(R.string.message_no_more_data), Toast.LENGTH_SHORT).show()
         }

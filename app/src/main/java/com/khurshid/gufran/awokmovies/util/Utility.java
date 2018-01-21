@@ -2,6 +2,7 @@ package com.khurshid.gufran.awokmovies.util;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 
 /**
@@ -13,5 +14,10 @@ public class Utility {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(data));
         context.startActivity(intent);
+    }
+
+    public static boolean isNetworkConnected(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null;
     }
 }

@@ -1,13 +1,14 @@
 
 package com.khurshid.gufran.awokmovies.entity;
 
+
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.List;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 public class Movie implements Parcelable {
 
@@ -207,6 +208,10 @@ public class Movie implements Parcelable {
         dest.writeByte((byte) (adult == null ? 0 : adult ? 1 : 2));
         dest.writeString(overview);
         dest.writeString(releaseDate);
+    }
+
+    public Movie(int id) {
+        this.id = id;
     }
 
 
