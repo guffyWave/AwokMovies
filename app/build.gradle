@@ -1,4 +1,19 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
 
 apply plugin: 'kotlin-android'
 
@@ -16,10 +31,20 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            buildConfigField "String", "BASE_URL", '"https://api.themoviedb.org/3/"'
+            buildConfigField "String", "API_KEY", '"1d667dff3c059cf67d84d98d3aa66102"'
+            buildConfigField "String", "LANGUAGE", '"en-US"'
+        }
         release {
             minifyEnabled false
+            buildConfigField "String", "BASE_URL", '"https://api.themoviedb.org/3/"'
+            buildConfigField "String", "API_KEY", '"1d667dff3c059cf67d84d98d3aa66102"'
+            buildConfigField "String", "LANGUAGE", '"en-US"'
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+
     }
     dataBinding {
         enabled = true
@@ -43,6 +68,7 @@ dependencies {
     compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     compile 'com.squareup.retrofit2:converter-scalars:2.3.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.9.1'//retrofit logging
     /*Rx*/
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.1.6'
@@ -67,5 +93,9 @@ dependencies {
 
     /*Debugging with Stetho*/
     compile 'com.facebook.stetho:stetho:1.5.0'
+    /*Crashlytics*/
+    compile('com.crashlytics.sdk.android:crashlytics:2.8.0@aar') {
+        transitive = true;
+    }
 
 }
