@@ -4,10 +4,21 @@ import android.app.Application;
 import android.content.Context;
 
 import com.facebook.stetho.Stetho;
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 
-/**
- * Created by gufran on 20/1/18.
- */
+
+/*
+    Code Prepared by **Gufran Khurshid**.
+    Sr. Android Developer.
+    Email Id : gufran.khurshid@gmail.com
+    Skype Id : gufran.khurshid
+    Date: **20 Jan, 2018.**
+    Description  : The application class
+
+    All Rights Reserved.
+*/
+
 
 public class AwokMovies extends Application {
     private static AwokMovies awokMovies;
@@ -16,6 +27,7 @@ public class AwokMovies extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
         awokMovies = AwokMovies.this;
         Stetho.initializeWithDefaults(this);
     }

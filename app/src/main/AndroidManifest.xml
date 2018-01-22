@@ -26,7 +26,9 @@
         <activity
             android:name=".activities.MovieDetailActivity"
             android:label="@string/title_activity_movie_detail"></activity>
-        <activity android:name=".DummyActivity"></activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="5ea683d1ca6055db16d99f0a428e7d94504a3847" />
     </application>
 
 </manifest>

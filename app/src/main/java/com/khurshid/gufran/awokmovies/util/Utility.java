@@ -5,9 +5,17 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 
-/**
- * Created by gufran on 21/1/18.
- */
+
+/*
+    Code Prepared by **Gufran Khurshid**.
+    Sr. Android Developer.
+    Email Id : gufran.khurshid@gmail.com
+    Skype Id : gufran.khurshid
+    Date: **20 Jan, 2018.**
+    Description  : Utility class
+
+    All Rights Reserved.
+*/
 
 public class Utility {
     public static void launchView(Context context, String data) {

@@ -3,11 +3,20 @@ package com.khurshid.gufran.awokmovies.persistence;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
-;
 
-/**
- * Created by gufran on 21/1/18.
- */
+
+
+/*
+    Code Prepared by **Gufran Khurshid**.
+    Sr. Android Developer.
+    Email Id : gufran.khurshid@gmail.com
+    Skype Id : gufran.khurshid
+    Date: **21 Jan, 2018.**
+    Description  : Entity to represent Movie data in mini form
+
+
+    All Rights Reserved.
+*/
 
 @Entity(tableName = "MovieMiniEntity")
 public class MovieMiniEntity {

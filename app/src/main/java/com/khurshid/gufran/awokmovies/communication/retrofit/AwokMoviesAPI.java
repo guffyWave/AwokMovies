@@ -12,9 +12,16 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rx.Observable;
 
-/**
- * Created by gufran on 20/1/18.
- */
+/*
+    Code Prepared by **Gufran Khurshid**.
+    Sr. Android Developer.
+    Email Id : gufran.khurshid@gmail.com
+    Skype Id : gufran.khurshid
+    Date: **21 Jan, 2018.**
+    Description  : API methods for Retrofit Client
+
+    All Rights Reserved.
+*/
 
 public interface AwokMoviesAPI {
 

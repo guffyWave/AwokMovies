@@ -1,8 +1,5 @@
 <resources>
     <string name="app_name">Awok Movies</string>
-    <string name="server_uri">https://api.themoviedb.org/3/</string>
-    <string name="server_api_key">1d667dff3c059cf67d84d98d3aa66102</string>
-    <string name="language">en-US</string>
 
     <!--Messages-->
     <string name="message_no_more_data">No data to show !</string>

@@ -9,9 +9,17 @@ import com.khurshid.gufran.awokmovies.view.MoviesHomeView;
 import rx.Subscription;
 import rx.subscriptions.CompositeSubscription;
 
-/**
- * Created by gufran on 20/1/18.
- */
+/*
+    Code Prepared by **Gufran Khurshid**.
+    Sr. Android Developer.
+    Email Id : gufran.khurshid@gmail.com
+    Skype Id : gufran.khurshid
+    Date: **20 Jan, 2018.**
+    Description  : Presenter
+
+
+    All Rights Reserved.
+*/
 
 public class MoviesPresenter {
     private final MoviesDao mMoviesDao;

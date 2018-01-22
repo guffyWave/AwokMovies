@@ -5,11 +5,17 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
-import com.khurshid.gufran.awokmovies.entity.Movie;
+/*
+    Code Prepared by **Gufran Khurshid**.
+    Sr. Android Developer.
+    Email Id : gufran.khurshid@gmail.com
+    Skype Id : gufran.khurshid
+    Date: **21 Jan, 2018.**
+    Description  : DB Class
 
-/**
- * Created by gufran on 21/1/18.
- */
+
+    All Rights Reserved.
+*/
 @Database(entities = {MovieMiniEntity.class}, version = MovieDatabase.VERSION)
 public abstract class MovieDatabase extends RoomDatabase {
     static final int VERSION = 1;

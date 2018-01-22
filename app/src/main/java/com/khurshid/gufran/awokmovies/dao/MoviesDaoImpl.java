@@ -1,5 +1,6 @@
 package com.khurshid.gufran.awokmovies.dao;
 
+import com.crashlytics.android.Crashlytics;
 import com.khurshid.gufran.awokmovies.communication.retrofit.AwokMoviesRetrofit;
 import com.khurshid.gufran.awokmovies.communication.retrofit.response.PopularityResult;
 import com.khurshid.gufran.awokmovies.communication.retrofit.response.QueryResult;
@@ -15,9 +16,16 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
-/**
- * Created by gufran on 20/1/18.
- */
+/*
+    Code Prepared by **Gufran Khurshid**.
+    Sr. Android Developer.
+    Email Id : gufran.khurshid@gmail.com
+    Skype Id : gufran.khurshid
+    Date: **21 Jan, 2018.**
+    Description  : DAO Implementation
+
+    All Rights Reserved.
+*/
 
 public class MoviesDaoImpl implements MoviesDao {
     @Override
@@ -38,7 +46,7 @@ public class MoviesDaoImpl implements MoviesDao {
 
                     @Override
                     public void onError(Throwable e) {
-                        //Crashlytics can be used to trace exceptions in different types of devices
+                        Crashlytics.logException(e);
                         callback.onError(new AwokMovieException("Some Error occured", e));
                     }
 
@@ -51,7 +59,7 @@ public class MoviesDaoImpl implements MoviesDao {
     }
 
     @Override
-    public Subscription getPopularMovies(int page,final MovieQueryCallback callback) {
+    public Subscription getPopularMovies(int page, final MovieQueryCallback callback) {
         return AwokMoviesRetrofit.getAPI().getPopularMovies(page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -68,7 +76,7 @@ public class MoviesDaoImpl implements MoviesDao {
 
                     @Override
                     public void onError(Throwable e) {
-                        //Crashlytics can be used to trace exceptions in different types of devices
+                        Crashlytics.logException(e);
                         callback.onError(new AwokMovieException("Some Error occured", e));
                     }
 
@@ -81,7 +89,7 @@ public class MoviesDaoImpl implements MoviesDao {
     }
 
     @Override
-    public Subscription topRatedMovies(int page,final MovieQueryCallback callback) {
+    public Subscription topRatedMovies(int page, final MovieQueryCallback callback) {
         return AwokMoviesRetrofit.getAPI().getTopMovies(page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -98,7 +106,7 @@ public class MoviesDaoImpl implements MoviesDao {
 
                     @Override
                     public void onError(Throwable e) {
-                        //Crashlytics can be used to trace exceptions in different types of devices
+                        Crashlytics.logException(e);
                         callback.onError(new AwokMovieException("Some Error occured", e));
                     }
 
@@ -111,7 +119,7 @@ public class MoviesDaoImpl implements MoviesDao {
     }
 
     @Override
-    public Subscription getMovie(int id,final MovieDetailQueryCallback callback) {
+    public Subscription getMovie(int id, final MovieDetailQueryCallback callback) {
         return AwokMoviesRetrofit.getAPI().getMovie(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -128,7 +136,7 @@ public class MoviesDaoImpl implements MoviesDao {
 
                     @Override
                     public void onError(Throwable e) {
-                        //Crashlytics can be used to trace exceptions in different types of devices
+                        Crashlytics.logException(e);
                         callback.onError(new AwokMovieException("Some Error occured", e));
                     }
 

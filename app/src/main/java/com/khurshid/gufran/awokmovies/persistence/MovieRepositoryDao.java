@@ -8,9 +8,18 @@ import android.arch.persistence.room.Query;
 
 import java.util.List;
 
-/**
- * Created by gufran on 21/1/18.
- */
+
+/*
+    Code Prepared by **Gufran Khurshid**.
+    Sr. Android Developer.
+    Email Id : gufran.khurshid@gmail.com
+    Skype Id : gufran.khurshid
+    Date: **20 Jan, 2018.**
+    Description  : Repository DAO
+
+
+    All Rights Reserved.
+*/
 
 @Dao
 public interface MovieRepositoryDao {

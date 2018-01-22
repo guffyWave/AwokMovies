@@ -5,7 +5,7 @@ package com.khurshid.gufran.awokmovies.adapters;
     Sr. Android Developer.
     Email Id : gufran.khurshid@gmail.com
     Skype Id : gufran.khurshid
-    Date: **30 December, 2017.**
+    Date: **20 Jan, 2018.**
 
     Description: *Load more interface*
      **

@@ -15,10 +15,16 @@ import com.khurshid.gufran.awokmovies.R;
 import com.khurshid.gufran.awokmovies.entity.Movie;
 
 import java.util.List;
+/*
+    Code Prepared by **Gufran Khurshid**.
+    Sr. Android Developer.
+    Email Id : gufran.khurshid@gmail.com
+    Skype Id : gufran.khurshid
+    Date: **21 Jan, 2018.**
+    Description  : Adapter to show Movies
 
-/**
- * Created by gufran on 20/1/18.
- */
+    All Rights Reserved.
+*/
 
 public class MoviesCollectionAdapter extends RecyclerView.Adapter {
 
@@ -62,7 +68,6 @@ public class MoviesCollectionAdapter extends RecyclerView.Adapter {
             Glide.with(movieViewHolder.moviePosterIV.getContext())
                     .load("http://image.tmdb.org/t/p/w185//" + movie.getPosterPath())
                     .transition(DrawableTransitionOptions.withCrossFade())
-                    //.placeholder(R.drawable.loading_spinner)
                     .into(movieViewHolder.moviePosterIV);
         }
     }

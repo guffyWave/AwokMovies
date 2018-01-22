@@ -22,9 +22,18 @@ import com.khurshid.gufran.awokmovies.view.MoviesHomeView
 import kotlinx.android.synthetic.main.fragment_movies_collection.*
 
 
-/**
- * Created by gufran on 20/1/18.
- */
+/*
+    Code Prepared by **Gufran Khurshid**.
+    Sr. Android Developer.
+    Email Id : gufran.khurshid@gmail.com
+    Skype Id : gufran.khurshid
+    Date: **20 Jan, 2018.**
+    Description  : The main fragment to show movies
+
+
+    All Rights Reserved.
+*/
+
 class MoviesCollectionFragment() : BaseFragment(), MoviesHomeView {
 
     private lateinit var mPresenter: MoviesPresenter
@@ -65,7 +74,6 @@ class MoviesCollectionFragment() : BaseFragment(), MoviesHomeView {
             val bundle = Bundle();
             bundle.putParcelable("MOVIE", movie)
             MovieDetailActivity.startActivity(activity, bundle)
-            // mAdapter.notifyItemChanged(position)
         })
 
         moviesRecyclerView.adapter = mAdapter

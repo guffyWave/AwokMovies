@@ -18,7 +18,15 @@ import com.khurshid.gufran.awokmovies.util.Utility
 import com.khurshid.gufran.awokmovies.view.MovieDetailView
 import kotlinx.android.synthetic.main.activity_movie_detail.*
 
-
+/*
+    Code Prepared by **Gufran Khurshid**.
+    Sr. Android Developer.
+    Email Id : gufran.khurshid@gmail.com
+    Skype Id : gufran.khurshid
+    Date: **22 Jan, 2018.**
+    Description  :Movie Detail Activity
+    All Rights Reserved.
+*/
 class MovieDetailActivity : BaseActivity(), MovieDetailView {
 
     private lateinit var mObtainedMovie: Movie

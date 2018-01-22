@@ -8,6 +8,15 @@ import android.view.View
 import com.khurshid.gufran.awokmovies.R
 import kotlinx.android.synthetic.main.activity_splash.*
 
+/*
+    Code Prepared by **Gufran Khurshid**.
+    Sr. Android Developer.
+    Email Id : gufran.khurshid@gmail.com
+    Skype Id : gufran.khurshid
+    Date: **22 Jan, 2018.**
+    Description  :Splash Activity
+    All Rights Reserved.
+*/
 
 class SplashActivity : AppCompatActivity() {
 

@@ -10,6 +10,15 @@ import com.khurshid.gufran.awokmovies.fragments.MoviesCollectionFragment
 import com.miguelcatalan.materialsearchview.MaterialSearchView
 import kotlinx.android.synthetic.main.activity_home.*
 
+/*
+    Code Prepared by **Gufran Khurshid**.
+    Sr. Android Developer.
+    Email Id : gufran.khurshid@gmail.com
+    Skype Id : gufran.khurshid
+    Date: **22 Jan, 2018.**
+    Description  :Home Activity
+    All Rights Reserved.
+*/
 
 class HomeActivity : BaseActivity() {
 
@@ -19,7 +28,6 @@ class HomeActivity : BaseActivity() {
         decorateToolbar()
         mSearchView.setOnQueryTextListener(object : MaterialSearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                //Toast.makeText(this@HomeActivity, "Searched " + query, Toast.LENGTH_SHORT).show()
                 propagateSearchQuery(query)
                 return false
             }
