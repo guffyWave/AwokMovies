@@ -1,9 +1,5 @@
 package com.khurshid.gufran.awokmovies.persistence;
 
-import android.arch.lifecycle.LiveData;
-
-import com.khurshid.gufran.awokmovies.entity.Movie;
-
 import java.util.List;
 
 /**
@@ -12,9 +8,9 @@ import java.util.List;
 
 public interface MovieRepository {
 
-    LiveData<MovieMiniEntity> findById(int id);
+    MovieMiniEntity findById(int id);
 
-    LiveData<List<MovieMiniEntity>> findAll();
+    List<MovieMiniEntity> findAll();
 
     long insert(MovieMiniEntity movie);
 

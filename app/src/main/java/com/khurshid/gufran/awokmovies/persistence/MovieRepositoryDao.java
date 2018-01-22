@@ -1,6 +1,5 @@
 package com.khurshid.gufran.awokmovies.persistence;
 
-import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
@@ -16,10 +15,10 @@ import java.util.List;
 @Dao
 public interface MovieRepositoryDao {
     @Query("SELECT * FROM MovieMiniEntity WHERE id=:id")
-    LiveData<MovieMiniEntity> findById(int id);
+    MovieMiniEntity findById(int id);
 
     @Query("SELECT * FROM MovieMiniEntity")
-    LiveData<List<MovieMiniEntity>> findAll();
+    List<MovieMiniEntity> findAll();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long insert(MovieMiniEntity movieMiniEntity);

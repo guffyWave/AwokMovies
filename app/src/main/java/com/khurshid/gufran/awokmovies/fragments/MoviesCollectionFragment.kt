@@ -1,5 +1,6 @@
 package com.khurshid.gufran.awokmovies.fragments
 
+import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
@@ -13,17 +14,12 @@ import com.khurshid.gufran.awokmovies.adapters.MoviesCollectionAdapter
 import com.khurshid.gufran.awokmovies.communication.retrofit.response.QueryResult
 import com.khurshid.gufran.awokmovies.dao.MoviesDaoImpl
 import com.khurshid.gufran.awokmovies.entity.Movie
-import com.khurshid.gufran.awokmovies.management.module.AppModule
-import com.khurshid.gufran.awokmovies.management.module.RoomModule
-import com.khurshid.gufran.awokmovies.persistence.MovieRepository
-import com.khurshid.gufran.awokmovies.persistence.MovieRepositoryDao
+import com.khurshid.gufran.awokmovies.persistence.MovieMiniEntity
 import com.khurshid.gufran.awokmovies.presenter.MoviesPresenter
 import com.khurshid.gufran.awokmovies.util.DatabaseUtil
 import com.khurshid.gufran.awokmovies.util.Utility
 import com.khurshid.gufran.awokmovies.view.MoviesHomeView
 import kotlinx.android.synthetic.main.fragment_movies_collection.*
-import rx.Observer
-import javax.inject.Inject
 
 
 /**
@@ -72,9 +68,6 @@ class MoviesCollectionFragment() : BaseFragment(), MoviesHomeView {
             // mAdapter.notifyItemChanged(position)
         })
 
-
-        Toast.makeText(activity, "Is Internet " + Utility.isNetworkConnected(activity), Toast.LENGTH_SHORT).show()
-
         moviesRecyclerView.adapter = mAdapter
 
         mPresenter = MoviesPresenter(MoviesDaoImpl(), this)
@@ -88,6 +81,8 @@ class MoviesCollectionFragment() : BaseFragment(), MoviesHomeView {
                 State.POPULAR -> mPresenter.showTopMovies(mCurrentPageCount)
             }
         }
+
+
     }
 
     public fun showPopularMovies() {
@@ -95,6 +90,10 @@ class MoviesCollectionFragment() : BaseFragment(), MoviesHomeView {
         mCurrentPageCount = 1
         mMovieList.clear()
         mPresenter.showPopularMovies(mCurrentPageCount)
+        if (!Utility.isNetworkConnected(activity)) {
+            FetchMovies().execute();
+            Toast.makeText(activity, "No Internet ", Toast.LENGTH_SHORT).show()
+        }
     }
 
     public fun searchMovie(query: String) {
@@ -116,8 +115,8 @@ class MoviesCollectionFragment() : BaseFragment(), MoviesHomeView {
         removeLoadingCard()
         if (queryResult!!.movies != null && queryResult!!.movies.size > 0) {
             synchronized(mMovieList) { mMovieList.addAll(queryResult.movies) }
-
-            //movieRepository!!.insert(mMovieList.get(0) as Movie)
+            if (mScreenState == State.POPULAR)
+                storePopularMoviesInDB()
         } else {
             Toast.makeText(activity, getString(R.string.message_no_more_data), Toast.LENGTH_SHORT).show()
         }
@@ -132,6 +131,26 @@ class MoviesCollectionFragment() : BaseFragment(), MoviesHomeView {
             }
         }
     }
+
+    private fun storePopularMoviesInDB() {
+        for (item in mMovieList) {
+            if (item is Movie) {
+                var movie: Movie = item as Movie
+                var movieMiniEntity = MovieMiniEntity(movie.id)
+                movieMiniEntity.voteAverage = movie.voteAverage.toInt()
+                movieMiniEntity.title = movie.title
+                movieMiniEntity.popularity = movie.popularity.toInt()
+                movieMiniEntity.posterPath = movie.posterPath
+                movieMiniEntity.voteCount = movie.voteCount.toInt()
+                movieMiniEntity.backdropPath = movie.backdropPath
+                movieMiniEntity.overview = movie.overview
+                movieMiniEntity.releaseDate = movie.releaseDate
+
+                databaseUtil.insertMovie(movieMiniEntity)
+            }
+        }
+    }
+
 
     override fun showWait() {
         if (mMovieList.size == 0) {
@@ -160,5 +179,36 @@ class MoviesCollectionFragment() : BaseFragment(), MoviesHomeView {
     override fun onDestroy() {
         super.onDestroy()
         mPresenter.onStop()
+    }
+
+
+    internal inner class FetchMovies : AsyncTask<Void, Void, Void>() {
+        override fun doInBackground(vararg voids: Void): Void? {
+            showWait()
+            return null
+        }
+
+        override fun onPostExecute(result: Void?) {
+            var miniMovieList = databaseUtil.getMoviesList()
+            if (!miniMovieList.isEmpty()) {
+                mMovieList.clear();
+                for (item in miniMovieList) {
+                    var movie = Movie(item.id)
+                    movie.voteAverage = item.voteAverage.toFloat()
+                    movie.title = item.title
+                    movie.popularity = item.popularity.toFloat()
+                    movie.posterPath = item.posterPath
+                    movie.voteCount = item.voteCount
+                    movie.backdropPath = item.backdropPath
+                    movie.overview = item.overview
+                    movie.releaseDate = item.releaseDate
+                    mMovieList.add(movie)
+                }
+                mAdapter.notifyDataSetChangedManually()
+            } else {
+                Toast.makeText(activity, getString(R.string.message_no_more_data), Toast.LENGTH_SHORT).show()
+            }
+            removeWait()
+        }
     }
 }

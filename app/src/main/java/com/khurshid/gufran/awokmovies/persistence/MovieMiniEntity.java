@@ -3,7 +3,6 @@ package com.khurshid.gufran.awokmovies.persistence;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
-
 ;
 
 /**
@@ -33,6 +32,9 @@ public class MovieMiniEntity {
     @ColumnInfo(name = "vote_count")
     private int voteCount;
 
+    public MovieMiniEntity(int id) {
+        this.id = id;
+    }
 
     public int getId() {
         return id;

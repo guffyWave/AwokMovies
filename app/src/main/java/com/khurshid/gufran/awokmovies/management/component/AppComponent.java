@@ -2,13 +2,11 @@ package com.khurshid.gufran.awokmovies.management.component;
 
 import android.app.Application;
 
-import com.khurshid.gufran.awokmovies.DummyActivity;
 import com.khurshid.gufran.awokmovies.management.module.AppModule;
 import com.khurshid.gufran.awokmovies.management.module.RoomModule;
 import com.khurshid.gufran.awokmovies.persistence.MovieDatabase;
 import com.khurshid.gufran.awokmovies.persistence.MovieRepository;
 import com.khurshid.gufran.awokmovies.persistence.MovieRepositoryDao;
-import com.khurshid.gufran.awokmovies.util.DatabaseUtil;
 
 import javax.inject.Singleton;
 
@@ -23,7 +21,7 @@ public interface AppComponent {
 
     // void inject(MoviesCollectionFragment moviesCollectionFragment);
 
-    void inject(DatabaseUtil dbUtil);
+    //void inject(DatabaseUtil dbUtil);
 
     MovieRepositoryDao movieRepositoryDao();
 

@@ -30,7 +30,7 @@ public class RoomModule {
 
     @Singleton
     @Provides
-    MovieRepositoryDao providesProductDao(MovieDatabase demoDatabase) {
+    MovieRepositoryDao providesMovieRepositoryDao(MovieDatabase demoDatabase) {
         return demoDatabase.getMovieRepositoryDao();
     }
 
