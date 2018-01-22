@@ -5,7 +5,15 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.khurshid.gufran.awokmovies.entity.Movie;
-
+/*
+    Code Prepared by **Gufran Khurshid**.
+    Sr. Android Developer.
+    Email Id : gufran.khurshid@gmail.com
+    Skype Id : gufran.khurshid
+    Date: **22 Jan, 2018.**
+    Description  :Represents Server Response
+    All Rights Reserved.
+*/
 public class QueryResult {
 
     @SerializedName("page")
