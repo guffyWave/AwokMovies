@@ -70,8 +70,7 @@ class HomeActivity : BaseActivity() {
     private fun decorateToolbar() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(true)
-        //supportActionBar?. = "Guffy Toolbar";
-        //supportActionBar?.setIcon(R.mipmap.ic_launcher_round)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_menu_white)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 }
